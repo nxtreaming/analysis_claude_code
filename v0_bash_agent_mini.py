@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """v0_bash_agent_mini.py - Mini Claude Code (Compact)"""
-from anthropic import Anthropic; from dotenv import load_dotenv; import subprocess as sp, sys, os
-load_dotenv(); C = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"), base_url=os.getenv("ANTHROPIC_BASE_URL")); M = os.getenv("MODEL_NAME", "claude-sonnet-4-20250514")
+from provider_utils import get_client, get_model; import subprocess as sp, sys, os
+C = get_client(); M = get_model()
 T = [{"name":"bash","description":"Shell cmd. Read:cat/grep/find/rg/ls. Write:echo>/sed. Subagent(for complex subtask): python v0_bash_agent_mini.py 'task'","input_schema":{"type":"object","properties":{"command":{"type":"string"}},"required":["command"]}}]
 S = f"CLI agent at {os.getcwd()}. Use bash to solve problems. Spawn subagent for complex subtasks: python v0_bash_agent_mini.py 'task'. Subagent isolates context and returns summary. Be concise."
 

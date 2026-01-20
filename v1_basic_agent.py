@@ -56,23 +56,20 @@ from dotenv import load_dotenv
 # Load configuration from .env file
 load_dotenv()
 
+# Import unified client provider
 try:
-    from anthropic import Anthropic
+    from provider_utils import get_client, get_model
 except ImportError:
-    sys.exit("Please install: pip install anthropic python-dotenv")
+    sys.exit("Error: provider_utils.py not found. Please ensure you are in the project root.")
 
 
 # =============================================================================
 # Configuration
 # =============================================================================
 
-API_KEY = os.getenv("ANTHROPIC_API_KEY")
-BASE_URL = os.getenv("ANTHROPIC_BASE_URL")
-MODEL = os.getenv("MODEL_NAME", "claude-sonnet-4-20250514")
 WORKDIR = Path.cwd()
-
-# Initialize client - handles both direct Anthropic and compatible APIs
-client = Anthropic(api_key=API_KEY, base_url=BASE_URL) if BASE_URL else Anthropic(api_key=API_KEY)
+MODEL = get_model()
+client = get_client()
 
 
 # =============================================================================

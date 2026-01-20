@@ -47,21 +47,14 @@ Usage:
     python v0_bash_agent.py "explore src/ and summarize"
 """
 
-from anthropic import Anthropic
-from dotenv import load_dotenv
+from provider_utils import get_client, get_model
 import subprocess
 import sys
 import os
 
-# Load environment variables from .env file
-load_dotenv()
-
-# Initialize API client with credentials from environment
-client = Anthropic(
-    api_key=os.getenv("ANTHROPIC_API_KEY"),
-    base_url=os.getenv("ANTHROPIC_BASE_URL")
-)
-MODEL = os.getenv("MODEL_NAME", "claude-sonnet-4-20250514")
+# Initialize API client and model using provider utilities
+client = get_client()
+MODEL = get_model()
 
 # The ONE tool that does everything
 # Notice how the description teaches the model common patterns AND how to spawn subagents
